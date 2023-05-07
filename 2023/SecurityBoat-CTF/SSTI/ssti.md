@@ -2,6 +2,11 @@
 
 In this CTF challenge, we were presented with a registration page that appeared to be vulnerable to Server-Side Template Injection (SSTI). The goal of the challenge was to exploit the SSTI vulnerability and print the flag.
 
+
+<p align="center">
+  <img src=register.png />
+</p>
+
 ## Identifying the Vulnerability
 
 To confirm whether the registration page was vulnerable to SSTI, we intercepted the request using Burp and injected the following payload into the username parameter:
@@ -9,6 +14,12 @@ To confirm whether the registration page was vulnerable to SSTI, we intercepted 
 {{7*7}}
 ``
 If the server responded with 49, it would confirm that the registration page was vulnerable to SSTI. In our case, the server did respond with 49, indicating that the SSTI vulnerability existed.
+
+
+<p align="center">
+  <img src=identify.png />
+</p>
+
 ## Identifying the Template Application
 
 The next step was to identify the template application that was being used on the server. To do this, we injected the following payload into the username parameter:
@@ -16,6 +27,12 @@ The next step was to identify the template application that was being used on th
 {{1/0}}
 ``
 This caused an error that revealed the Twig installation files path, which helped us to identify the template application being used.
+
+
+
+<p align="center">
+  <img src=template.png />
+</p>
 
 ## Exploiting the Vulnerability
 
@@ -25,7 +42,12 @@ With the SSTI vulnerability confirmed and the template application identified, w
 ``
 This payload allowed us to navigate to the home directory and print the flag in reverse order using the rev command. we used rev because cat command was blacklisted.
 
-## flag
+
+<p align="center">
+  <img src=flag.png />
+</p>
+
+## Flag
 ``
 Here is your flag {SSTI_4nd_t3mpl4t3s_4r3_fun}
 ``
